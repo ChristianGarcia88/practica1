@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+	crossorigin="anonymous"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+	crossorigin="anonymous"></script>
+	<script src="../static/datosModal.js"  th:src="@{/datosModal.js}"></script>	
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+<div  th:if="${bandera != null}"  class="alert alert-success  aviso" role="alert">
+  <strong  th:text="${bandera}"></strong> 
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+ 
+	<h1 style="text-align: center" class="text text-primary">Lista de Clientes</h1>
+	<br>
+	<table class="table table-hover  table-stripped" border="1">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nombre Cliente</th>
+				<th>Apellido Cliente</th>
+				<th>Procesado?</th>
+				<th>Fecha</th>
+				<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="cliente: ${lista}">
+ 
+				<td th:text="${cliente.id}"></td>
+				<td th:text="${cliente.nombre}"></td>
+				<td th:text="${cliente.apellido}"></td>
+				<td th:text="${cliente.procesado}"></td>
+				<td th:text="${#dates.format(cliente.fecha, 'dd-MM-yyyy HH:mm')}"></td>
+				<td><a   class="btn btn-primary miboton"  th:href="${'/consultar/' + cliente.id}" >Editar</a>
+				<!-- <a   class="btn btn-primary miboton" href="javascript:void(0);"  th:onclick="'javascript:funcion(' + ${cliente.id} + ')'" >Editar</a>funciona con el 1 de javascript -->
+				<a  class="btn  btn-danger  "  onclick="return alert('are you?')" th:href="@{'/eliminar/{id}'(id=${cliente.id})}">Eliminar</a></td>
+	
+
+
+			</tr>
+
+
+		</tbody>
+	</table>
+
+	<a th:href="@{/index}">Regresar a Inicio....</a>
+	
+	<div class="prueba">
+	<button class="btn  btn-danger">Abrir paginita</button>
+	</div>
+	
+	<div  class="container">
+	<div class="row">
+	<div   class="pruebaInyection col-12"></div>
+	  </div>
+	  </div>
+	  
+	  <form  id="formulario"  th:action="@{/actualizar}"  method="put">
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>	
+        </button>
+      </div>
+      <div class="modal-body">
+      
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">ID:</label>
+            <input type="text" class="form-control" id="id" name="id">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">NOMBRE:</label>
+            <input type="text" class="form-control" id="nombre"  name="nombre"/>
+          </div>
+      
+      		<div class="form-group">
+            <label for="message-text" class="col-form-label">APELLIDO:</label>
+            <input type="text" class="form-control" id="apellido"  name="apellido" />
+          </div>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Editar</button>
+      </div>
+    </div>
+  </div>
+</div>
+	</form>
+
+</body>
+</html>
